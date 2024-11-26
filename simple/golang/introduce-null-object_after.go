@@ -1,55 +1,26 @@
-package main
-
-import "fmt"
-
-
-type Customer interface {
-	IsNull() bool
-	GetPlan() string
-}
 
 
 type NullCustomer struct{}
 
-func (n NullCustomer) IsNull() bool {
+
+func (n NullCustomer) isNull() bool {
 	return true
 }
 
-func (n NullCustomer) GetPlan() string {
-	return "Null Plan"
+func (n NullCustomer) GetPlan() *BillingPlan {
+	return BillingPlanBasic()
 }
 
 
-type RegularCustomer struct {
-	plan string
+// # Replace null values with Null-object.
+
+if order.customer == nil {
+	customer = NullCustomer{}
+} else {
+	customer = order.customer
 }
-
-func (r RegularCustomer) IsNull() bool {
-	return false
-}
-
-func (r RegularCustomer) GetPlan() string {
-	return r.plan
-}
-
-
-type Order struct {
-	customer Customer
-}
-
-func main() {
-
-	order := Order{customer: nil}
-
-
-	customer := order.customer
-	if customer == nil {
-		customer = NullCustomer{}
-	}
-
-	plan := customer.GetPlan()
-	fmt.Println("Customer Plan:", plan)
-}
+// # Use Null-object as if it's normal subclass.
+plan = customer.GetPlan()
 
 // class NullCustomer(Customer):
 

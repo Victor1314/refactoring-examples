@@ -1,7 +1,6 @@
 
 
 
-var plan BillingPlan
 if customer == nil {
 	plan = BillingPlanBasic()
 } else {
